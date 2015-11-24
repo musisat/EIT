@@ -87,7 +87,7 @@ for ii=1:nN-2
     if ij==N(ii)
       for il=icpt:N(ii+1)
           % Full circle termination settings
-        if il==N(ii+1),il1=1;else,il1=il+1;end
+        if il==N(ii+1),il1=1;else il1=il+1;end
           %
         ipt1=find(g(:,1)==r(ii) & g(:,2)==phi(1,ii));
         ipt2=find(g(:,1)==r(ii+1) & g(:,2)==phi(il,ii+1));

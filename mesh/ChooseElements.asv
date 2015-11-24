@@ -31,16 +31,19 @@ if nargin==4
  Ind=zeros(N,1);
  for ii=1:N
   [x,y]=ginput(1);
-  Ind(ii)=tsearch(Nod(:,1),Nod(:,2),Topol,x,y);
+  d = delaunayTriangulation(Nod(:,1),Nod(:,2));
+  q = [x,y];
+  Ind(ii) = [Ind;PointLocation(d,q)];
+  %Ind(ii)=tsearch(Nod(:,1),Nod(:,2),Topol,x,y);
   Hii=Nod(Topol(Ind(ii),:),:);
   patch(Hii(:,1),Hii(:,2),1);            
  end
 else
   Ind=[];
   [x,y]=ginput;
-  DT = Topol;
-  QP = [x,y];
-  Ind = [Ind;
+  d = delaun;
+  q = [x,y];
+  Ind = [Ind;PointLocation(d,q)];
   %Ind=[Ind;tsearch(Nod(:,1),Nod(:,2),Topol,x,y)];
  for ii=1:max(size(Ind))
   Hii=Nod(Topol(Ind(ii),:),:);

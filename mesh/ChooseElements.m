@@ -31,7 +31,7 @@ if nargin==4
  Ind=zeros(N,1);
  for ii=1:N
   [x,y]=ginput(1);
-  d = Topol;
+  d = delaunayTriangulation(Nod(:,1),Nod(:,2));
   q = [x,y];
   Ind(ii) = [Ind;PointLocation(d,q)];
   %Ind(ii)=tsearch(Nod(:,1),Nod(:,2),Topol,x,y);
@@ -41,7 +41,7 @@ if nargin==4
 else
   Ind=[];
   [x,y]=ginput;
-  d = Topol;
+  d = delaunayTriangulation(Nod(:,1),Nod(:,2));
   q = [x,y];
   Ind = [Ind;PointLocation(d,q)];
   %Ind=[Ind;tsearch(Nod(:,1),Nod(:,2),Topol,x,y)];
