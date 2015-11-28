@@ -40,7 +40,46 @@ Uel=U.Electrode(:);
 Agrad1=Agrad*Ind2;   % Group some of the element for the inverse computations
 
 
+%%             PROCEDURE TO SOLVE THE INVERSE PROBLEM           %%
 
+% Approximate the best homogenous resistivity.
+
+
+disp('Solves the full nonlinear inverse problem by regularised Gauss-Newton iteration.')
+
+disp('Initialisations...')
+
+A=UpdateFemMatrix(Agrad,Kb,M,S,ones(NElement2,1));  % The system matrix.
+Uref=ForwardSolution(NNode2,NElement2,A,C,T,[],'real',p,r);
+
+rho0=Uref.Electrode(:)\U.Electrode(:);
+
+A=UpdateFemMatrix(Agrad,Kb,M,S,1./rho0*ones(size(sigma)));  % The system matrix.
+Uref=ForwardSolution(NNode2,NElement2,A,C,T,[],'real',p,r);
+Urefel=Uref.Electrode(:);
+
+rho=rho0*ones(size(Agrad1,2),1);
+J=Jacobian(Node2,Element2,Agrad1,Uref.Current,Uref.MeasField, ...
+           rho,'real');
+
+%Regularisation parameter and matrix
+
+alpha = 0.000005; 
+R=MakeRegmatrix(Element1);
+
+iter=5;
+
+disp('Iterations...')
+
+for ii=1:iter
+ rho=rho+(J'*J+alpha*R'*R)\(J'*(Uel-Urefel)-alpha*R'*R*rho);
+ rhobig=Ind2*rho;
+ A=UpdateFemMatrix(Agrad,Kb,M,S,1./rhobig);  % The system matrix.
+ Uref=ForwardSolution(NNode2,NElement2,A,C,T,[],'real',p,r);
+ Urefel=Uref.Electrode(:);
+ J=Jacobian(Node2,Element2,Agrad1,Uref.Current,Uref.MeasField,rho,'real');
+ clf,Plotinvsol(rho,g1,H1);colorbar,title([num2str(ii) '. step']);drawnow;
+end
 
 
 
