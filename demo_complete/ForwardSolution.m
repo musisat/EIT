@@ -64,7 +64,7 @@ elseif style=='real'
  II=[zeros(NNode,size(T,2));C'*T];
 
  if nargin<8
-  p=symmmd(A);
+  p=symamd(A);
   r(p)=1:max(size(p));
  end
 
