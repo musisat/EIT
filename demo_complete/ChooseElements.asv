@@ -1,10 +1,11 @@
-function Ind=ChooseNodes(Node,Element,E,N)
+function Ind=ChooseElements(Node,Element,E,N)
 
-%ChooseNodes Lets you to choose an inhomogeneity (a set of nodes) for 2D EIT simulations 
-% Function Ind=ChooseNodes(Node,Element,E,N);
+%ChooseElements Lets you to choose an inhomogeneity (a set of elements) for 2D EIT simulations
+% Function Ind=ChooseElemenst(Node,Element,E,N);
 % lets you choose N elements from a mesh
-% defined by Node and Element. If N is not given, as many
-% elements as you want are chosen. 
+% defined by Element. If N is not given, as many
+% elements as you want are chosen. Ind are the indices
+% to the Element topolgy.
 %
 % INPUT
 %
@@ -17,7 +18,7 @@ function Ind=ChooseNodes(Node,Element,E,N)
 %
 % Ind = Indices of the chosen elements
 
-% M. Vauhkonen 17.8.1999,
+% M. Vauhkonen 17.8.1999, 
 % University of Kuopio, Department of Applied Physics, PO Box 1627,
 % FIN-70211 Kuopio, Finland, email: Marko.Vauhkonen@uku.fi
 
@@ -32,21 +33,23 @@ if nargin==4
   [x,y]=ginput(1);
   d = delaunayTriangulation(Nod(:,1),Nod(:,2));
   q = [x,y];
-  Ind(ii) = nearestNeighbor(d,q);
-  %Ind(ii)=dsearch(Nod(:,1),Nod(:,2),Topol,x,y);
-  plot(Nod(Ind(ii),1),Nod(Ind(ii),2),'*')
+  Ind(ii) = [Ind;PointLocation(d,q)];
+  %Ind(ii)=tsearch(Nod(:,1),Nod(:,2),Topol,x,y);
+  Hii=Nod(Topol(Ind(ii),:),:);
+  patch(Hii(:,1),Hii(:,2),1);            
  end
 else
- Ind=[]; 
- [x,y]=ginput;
- d = delaunayTriangulation(Nod(:,1),Nod(:,2));
- q = [x,y];
- Ind = nearestNeighbor(d,q);
- %Ind=[Ind;dsearch(Nod(:,1),Nod(:,2),Topol,x,y)];
+  Ind=[];
+  [x,y]=ginput;
+  d = delaun;
+  q = [x,y];
+  Ind = [Ind;PointLocation(d,q)];
+  %Ind=[Ind;tsearch(Nod(:,1),Nod(:,2),Topol,x,y)];
  for ii=1:max(size(Ind))
-   plot(Nod(Ind(ii),1),Nod(Ind(ii),2),'*')
+  Hii=Nod(Topol(Ind(ii),:),:);
+  patch(Hii(:,1),Hii(:,2),1);           
  end
 end
 
-%Ind=dsearch(Nod(:,1),Nod(:,2),Topol,x,y);
+
 

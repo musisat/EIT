@@ -1,7 +1,8 @@
-%EidorsDemo1 Demonstrates the use of 2D EIT Package with linear basis
-% EidorsDemo1 Demonstrates the use of 2D EIT Package for simulations with linear approksimation basis
+%EidorsDemoDynamic Demonstrates the use of 2D EIT Package for dynamic imaging
+% EidorsDemoDynamic Demonstrates the use of 2D EIT Package for dynamic imaging.
+% Here only a static image is reconstructed that shows the convergence of the algorithms.
 
-% M. Vauhkonen 28.3.2000,
+% M. Vauhkonen 28.3.2000
 % University of Kuopio, Department of Applied Physics, PO Box 1627,
 % FIN-70211 Kuopio, Finland, email: Marko.Vauhkonen@uku.fi
 
@@ -17,19 +18,14 @@ H1=reshape([Element1.Topology],3,NElement1)';
 g2=reshape([Node2.Coordinate],2,NNode2)';
 H2=reshape([Element2.Topology],3,NElement2)';
 
-
-disp('Choose a circular inhomogeneity. Left mouse button, center, right button, radius.')
-Ind=ChooseCircle(Node2,Element2);       % Make data for an inhomogeneity.
+Ind=ChooseCircle(Node2,Element2);         % Make data for a circular inhomogeneity.
 sigma=1/400*ones(NElement2,1);            % Make a conductivity vector.
-sigma(Ind)=2/400;			  % Conductivity of the inhomogeneity.
+sigma(Ind)=2/400;                         % Conductivity of the inhomogeneity.
 
-clf,Plotinvsol(1./sigma,g2,H2);colorbar,title('Your resistivity distribution');drawnow
-disp('Press any key to continue...'),pause
-
-disp('Computes the simulated data.')
-L=16;					  % The number of electrodes.
-z=0.005*ones(L,1);			  % Contact impedances.
-[II1,T]=Current(L,NNode2,'tri');	  % Trigonometric current pattern.
+L=16;
+z=0.005*ones(L,1);
+sN=max(size(Node2));
+[II1,T]=Current(L,sN,'adj');
 
 [Agrad,Kb,M,S,C]=FemMatrix(Node2,Element2,z);
 A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
@@ -37,17 +33,11 @@ A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
 [U,p,r]=ForwardSolution(NNode2,NElement2,A,C,T,[],'real'); % Simulated data.
 Uel=U.Electrode(:);
 
-Agrad1=Agrad*Ind2;   % Group some of the element for the inverse computations
-
+Agrad1=SparseCrush(Agrad*Ind2);   % Group some of the element for the inverse computations
 
 %%             PROCEDURE TO SOLVE THE INVERSE PROBLEM           %%
 
 % Approximate the best homogenous resistivity.
-
-
-disp('Solves the full nonlinear inverse problem by regularised Gauss-Newton iteration.')
-
-disp('Initialisations...')
 
 A=UpdateFemMatrix(Agrad,Kb,M,S,ones(NElement2,1));  % The system matrix.
 Uref=ForwardSolution(NNode2,NElement2,A,C,T,[],'real',p,r);
@@ -64,29 +54,19 @@ J=Jacobian(Node2,Element2,Agrad1,Uref.Current,Uref.MeasField, ...
 
 %Regularisation parameter and matrix
 
-alpha = 0.000005; 
+alpha=0.0005;
 R=MakeRegmatrix(Element1);
 
-iter=5;
 
-disp('Iterations...')
+%%%Initializations for Kalman filter and smoother
+a1=10; %Coefficient for diagonal state noise covariance.
+a2=0.001; %Coefficient for diagonal measurement noise covariance.
+F=sparse(eye(NElement1));
 
-for ii=1:iter
- rho=rho+(J'*J+alpha*R'*R)\(J'*(Uel-Urefel)-alpha*R'*R*rho);
- rhobig=Ind2*rho;
- A=UpdateFemMatrix(Agrad,Kb,M,S,1./rhobig);  % The system matrix.
- Uref=ForwardSolution(NNode2,NElement2,A,C,T,[],'real',p,r);
- Urefel=Uref.Electrode(:);
- J=Jacobian(Node2,Element2,Agrad1,Uref.Current,Uref.MeasField,rho,'real');
- clf,Plotinvsol(rho,g1,H1);colorbar,title([num2str(ii) '. step']);drawnow;
-end
-
-
-
-
-
-
-
+%%Kalman filter and Fixed-interval smoother
+[rhoF,rhoS]=Dyneit(J,Uel,L,NElement1,Urefel,a1,a2,rho0,alpha,R,F);
+clf,dynadecks(rhoF,[],g1,H1,4)
+figure,clf,dynadecks(rhoS,[],g1,H1,4)
 
 
 
