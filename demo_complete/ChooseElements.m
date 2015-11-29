@@ -33,7 +33,7 @@ if nargin==4
   [x,y]=ginput(1);
   d = delaunayTriangulation(Nod(:,1),Nod(:,2));
   q = [x,y];
-  Ind(ii) = [Ind;PointLocation(d,q)];
+  Ind(ii) = pointLocation(d,q);
   %Ind(ii)=tsearch(Nod(:,1),Nod(:,2),Topol,x,y);
   Hii=Nod(Topol(Ind(ii),:),:);
   patch(Hii(:,1),Hii(:,2),1);            

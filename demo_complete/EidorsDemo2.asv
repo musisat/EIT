@@ -22,7 +22,7 @@ H2=reshape([Element2.Topology],3,NElement2)';
 
 L=16;					  % The number of electrodes.
 z=0.005*ones(L,1);			  % Contact impedances.
-[II1,T]=Current(L,NNode2,'adj');	  % Adjacent current pattern.
+[II1,T]=Current(L,NNode2,'adjp');	  % Adjacent current pattern.
 
 %Load some data measured with the EIT system built in Kuopio
 load bubble2.dat

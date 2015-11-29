@@ -1,5 +1,5 @@
 %EidorsDemo1 Demonstrates the use of 2D EIT Package with linear basis
-% EidorsDemo1 Demonstrates the use of 2D EIT Package for simulations with linear approksimation basis
+% EidorsDemo1 Demonstrates the use of 2D EIT Package for simulations with linear approximation basis
 
 % M. Vauhkonen 28.3.2000,
 % University of Kuopio, Department of Applied Physics, PO Box 1627,
