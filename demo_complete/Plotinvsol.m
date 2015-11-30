@@ -1,4 +1,4 @@
-function []=Plotinvsol(rho,g,H);
+function []=Plotinvsol(rho,g,H)
 
 %Plotinvsol Plots the solution of 2D EIT problem with piecewise constant basis
 % Function []=Plotinvsol(rho,g,H);
@@ -16,7 +16,7 @@ function []=Plotinvsol(rho,g,H);
 % FIN-70211 Kuopio, Finland, email: Marko.Vauhkonen@uku.fi
 
 
-[nH,mH]=size(H);
+[nH,~]=size(H);
 
 axis('off'),axis('square')
 set(gcf,'defaultpatchedgecolor','none');

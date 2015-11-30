@@ -33,6 +33,8 @@ if nargin==4
   [x,y]=ginput(1);
   d = delaunayTriangulation(Nod(:,1),Nod(:,2));
   q = [x,y];
+  % I don't think this actually works because it's ignoring the
+  % pre-determined topology:
   Ind(ii) = pointLocation(d,q);
   %Ind(ii)=tsearch(Nod(:,1),Nod(:,2),Topol,x,y);
   Hii=Nod(Topol(Ind(ii),:),:);
@@ -43,7 +45,7 @@ else
   [x,y]=ginput;
   d = delaunayTriangulation(Nod(:,1),Nod(:,2));
   q = [x,y];
-  Ind = [Ind;PointLocation(d,q)];
+  Ind = [Ind;pointLocation(d,q)];
   %Ind=[Ind;tsearch(Nod(:,1),Nod(:,2),Topol,x,y)];
  for ii=1:max(size(Ind))
   Hii=Nod(Topol(Ind(ii),:),:);

@@ -22,13 +22,14 @@ nH=max(size(H));
 axis('xy'),axis('square')
 hold on
 
+
 for ii=1:nH
   Hii=g(H(ii,:),:);
   Hii=[Hii;Hii(1,:)];
   if ~isempty(E)
     hHii=plot(Hii(:,1),Hii(:,2),co);
     [pp,cc]=find(ii==E);
-    if ~isempty(find(ii==E)),
+    if ~isempty(find(ii==E,1)),
      hHii=fill(Hii(:,1),Hii(:,2),pp);
     end
   else

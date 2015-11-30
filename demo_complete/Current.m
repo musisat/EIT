@@ -1,4 +1,4 @@
-function [I,T]=Current(L,lg,style,rms,numpat);
+function [I,T]=Current(L,lg,style,rms,numpat)
 
 %Current Supplies some current patterns for 2D EIT
 % Function [I,T]=Current(L,lg,style,rms,numpat) calculates 
@@ -38,7 +38,7 @@ if nargin == 4 & style == 'tri'
  numpat=L-1;
 end
 
-if nargin == 4 & style ~= 'tri'
+if nargin == 4 && ~strcmp(style,'tri')
  numpat=L;
 end
 
@@ -90,10 +90,11 @@ I=[zeros(lg,numpat);rms*T];
 
 
 case 'opp'
-if numpat > L/2, 
-str=['Too many current patterns. Automatically set to ', num2str(L/2),'.' ];
+if numpat > L/2 
+    str=['Too many current patterns. Automatically set to ', num2str(L/2),'.' ];
   disp(str)
-numpat=L/2;end
+    numpat=L/2;
+end
 II=zeros(L,numpat);
 l=(1:L)';
 II1=diag(ones(L,1));

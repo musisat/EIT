@@ -1,4 +1,4 @@
-function [fh,fp]=Plotinvsolnode(sol,g,H);
+function [fh,fp]=Plotinvsolnode(sol,g,H)
 
 %Plotinvsolnode Plots the solution of 2D EIT problem in linear basis 
 % Function []=Plotinvsolnode(sol,g,H);
@@ -17,9 +17,9 @@ function [fh,fp]=Plotinvsolnode(sol,g,H);
 
 
 
-[solN,solM]=size(sol);
+[~,solM]=size(sol);
 [gN,gM]=size(g);
-[HN,HM]=size(H);
+[HN,~]=size(H);
 
 for ii=1:solM
   view(2);

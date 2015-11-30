@@ -1,4 +1,6 @@
-function Vh=RemoveVolt(Uel,L);
+function Vh=RemoveVolt(Uel,L)
+
+% I DON'T THINK THIS CURRENTLY WORKS IF NUMPAT < L-1.
 
 %RemoveVolt Removes all the voltages measured on the current carrying electrodes
 % Function Vh=RemoveVolt(Uel,L);
@@ -21,8 +23,8 @@ function Vh=RemoveVolt(Uel,L);
 % FIN-70211 Kuopio, Finland, email: Marko.Vauhkonen@uku.fi
 
   Uel=Uel(:);
-  [rUel,cUel]=size(Uel);
-  Uh=reshape(Uel,L,rUel/L);
+  [rUel,~]=size(Uel);
+  Uh=reshape(Uel,L,rUel/L); % Might need some rounding here.
   Vadj=Uh;
   kk=1;
    for ii=1:L

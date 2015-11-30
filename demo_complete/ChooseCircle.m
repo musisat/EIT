@@ -1,4 +1,4 @@
-function [Ind]=ChooseCircle(Node,Element);
+function [Ind]=ChooseCircle(Node,Element)
 
 %ChooseCircle Lets you to define a circular inhomogeneity for 2D EIT simulations
 % Function [Ind]=ChooseCircle(Node,Element);

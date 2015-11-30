@@ -1,4 +1,4 @@
-%EidorsDemo1quad Demonstrates the use of 2D EIT Package with quadratic basis
+% DON'T USE THIS FOR NOW.
 % EidorsDemo1quad Demonstrates the use of 2D EIT Package for simulations with quadratic basis.
 %
 % M. Vauhkonen 28.3.2000,
@@ -17,7 +17,7 @@ H1=reshape([Element.Topology],3,NElement1)';
 g2=reshape([Node1.Coordinate],2,NNode2)';
 H2=reshape([Element1.Topology],6,NElement2)';
 
-
+% DON'T USE CHOOSEELEMENTS FOR NOW BECAUSE IT DOESN'T WORK.
 Ind=ChooseElements(Node,Element,[],10);   % Make data for an inhomogeneity.
 sigma=1/400*ones(NElement2,1);            % Make a conductivity vector.
 sigma(Ind)=2/400;			  % Conductivity of the inhomogeneity.
