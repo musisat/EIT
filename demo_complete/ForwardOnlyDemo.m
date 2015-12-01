@@ -27,6 +27,7 @@ sigma(Ind1)=5/400;			  % Conductivity of the inhomogeneity.
 sigma(Ind2)=2/400;
 
 % Eventually we'll want to get rid of Plotinvsol or rewrite it.
+figure(1)
 clf,Plotinvsol(1./sigma,g2,H2);colorbar,title('Your resistivity distribution');drawnow
 disp('Press any key to continue...'),pause
 
@@ -43,4 +44,5 @@ A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
 % This is ultimately what we want to plot:
 [U,p,r]=ForwardSolution(NNode2,NElement2,A,C,T,[],'real'); % Simulated data.
 Uel=U.Electrode(:);
+figure(2)
 clf,Plotinvsol(U.Current,g2,H2); colorbar; drawnow;

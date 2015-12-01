@@ -20,7 +20,7 @@ function [U,p,r]=ForwardSolution(NNode,NElement,A,C,T,MeasPattern,style,p,r)
 %
 % OUTPUT
 %
-% U = potential data structure, includes potetial correspondign to the actual
+% U = potential data structure, includes potential corresponding to the actual
 %     current injections (U.Current), for the measurement pattern (U.MeasField)
 %     and voltages on the electrodes (U.Electrode)
 % p = the permutation vector (optional)
@@ -33,6 +33,7 @@ function [U,p,r]=ForwardSolution(NNode,NElement,A,C,T,MeasPattern,style,p,r)
 
 L=max(size(A))-NNode+1;    % The number of electrodes     
 
+% Need to figure out how to use comp
 if strcmp(style,'comp')                  
  II1=sparse([zeros(L,NNode),C,zeros(L,NNode+L-1);zeros(L,2*NNode+L-1),C]);
   if ~isempty(MeasPattern) 
@@ -44,12 +45,12 @@ if strcmp(style,'comp')
   end
  II=sparse([[zeros(NNode,size(T,2));C'*T];zeros(NNode+L-1,size(T,2))]);
  A=[real(A),-imag(A);imag(A),real(A)];
- UU=A'\II1;%Voltages for the "measurement field" and for the current patterns.
+ UU=A'\II1; %Voltages for the "measurement field" and for the current patterns.
  UU=full([UU,A\II]);
  U.MeasField=[UU(1:NNode,1:size(II1,2));UU(NNode+L:2*NNode+L-1,1:size(II1,2))]; %The "measurement field" data
  U.Electrode=MeasPattern'*[C,zeros(size(C));zeros(size(C)),C]* ...
             [UU(NNode+1:NNode+L-1,size(II1,2)+1:size(UU,2));UU(2*NNode+L:size(UU,1), ...
-            size(II1,2)+1:size(UU,2))];%Voltages on the electrodes
+            size(II1,2)+1:size(UU,2))]; %Voltages on the electrodes
  U.Current=[UU(1:NNode,size(II1,2)+1:size(UU,2));UU(NNode+L:2*NNode+L-1,size(II1,2)+1:size(UU,2))]; 
 
 elseif strcmp(style,'real')

@@ -24,6 +24,7 @@ sigma=1/400*ones(NElement2,1);            % Make a conductivity vector.
 sigma(Ind)=2/400;			  % Conductivity of the inhomogeneity.
 
 % Eventually we'll want to get rid of Plotinvsol or rewrite it.
+figure(1)
 clf,Plotinvsol(1./sigma,g2,H2);colorbar,title('Your resistivity distribution');drawnow
 disp('Press any key to continue...'),pause
 
@@ -72,7 +73,7 @@ R=MakeRegmatrix(Element1);
 iter=5;
 
 disp('Iterations...')
-
+% I think the iterations just refine the guess
 for ii=1:iter
  rho=rho+(J'*J+alpha*R'*R)\(J'*(Uel-Urefel)-alpha*R'*R*rho);
  rhobig=Ind2*rho;
@@ -80,6 +81,7 @@ for ii=1:iter
  Uref=ForwardSolution(NNode2,NElement2,A,C,T,[],'real',p,r);
  Urefel=Uref.Electrode(:);
  J=Jacobian(Node2,Element2,Agrad1,Uref.Current,Uref.MeasField,rho,'real');
+ figure(2)
  clf,Plotinvsol(rho,g1,H1);colorbar,title([num2str(ii) '. step']);drawnow;
 end
 
