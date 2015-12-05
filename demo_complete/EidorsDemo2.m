@@ -75,7 +75,7 @@ for ii=1:iter
  Urefel=RemoveVolt(Urefel,L);
  J=Jacobian(Node2,Element2,Agrad1,Uref.Current,Uref.MeasField,rho,'real');
  J=RemoveJacob(J,L);
- figure(ii)
+ %figure(ii)
  clf,Plotinvsol(rho,g1,H1);colorbar;drawnow;
 end
 

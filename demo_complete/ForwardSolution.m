@@ -34,7 +34,7 @@ function [U,p,r]=ForwardSolution(NNode,NElement,A,C,T,MeasPattern,style,p,r)
 L=max(size(A))-NNode+1;    % The number of electrodes     
 
 % Need to figure out how to use comp
-if strcmp(style,'comp')                  
+if strcmp(style,'comp')
  II1=sparse([zeros(L,NNode),C,zeros(L,NNode+L-1);zeros(L,2*NNode+L-1),C]);
   if ~isempty(MeasPattern) 
    II1=MeasPattern'*II1;
@@ -51,7 +51,12 @@ if strcmp(style,'comp')
  U.Electrode=MeasPattern'*[C,zeros(size(C));zeros(size(C)),C]* ...
             [UU(NNode+1:NNode+L-1,size(II1,2)+1:size(UU,2));UU(2*NNode+L:size(UU,1), ...
             size(II1,2)+1:size(UU,2))]; %Voltages on the electrodes
- U.Current=[UU(1:NNode,size(II1,2)+1:size(UU,2));UU(NNode+L:2*NNode+L-1,size(II1,2)+1:size(UU,2))]; 
+ U.Current=[UU(1:NNode,size(II1,2)+1:size(UU,2));UU(NNode+L:2*NNode+L-1,size(II1,2)+1:size(UU,2))];
+ 
+ if nargin<8
+  p=symamd(A);
+  r(p)=1:max(size(p));
+ end
 
 elseif strcmp(style,'real')
  II1=sparse([zeros(L,NNode),C]);

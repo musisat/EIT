@@ -20,11 +20,12 @@ H2=reshape([Element2.Topology],3,NElement2)';
 
 disp('Choose a circular inhomogeneity. Left mouse button, center, right button, radius.')
 % Now we can insert two inhomogeneities.
+% This is sort of annoying so I'm getting rid of it.
 Ind1=ChooseCircle(Node2,Element2);       % Make data for an inhomogeneity.
-Ind2=ChooseCircle(Node2,Element2);
+%Ind2=ChooseCircle(Node2,Element2);
 sigma=1/400*ones(NElement2,1);            % Make a conductivity vector.
 sigma(Ind1)=5/400;			  % Conductivity of the inhomogeneity.
-sigma(Ind2)=2/400;
+%sigma(Ind2)=2/400;
 
 % Eventually we'll want to get rid of Plotinvsol or rewrite it.
 figure(1)
@@ -36,7 +37,9 @@ L=16;					  % The number of electrodes.
 z=0.005*ones(L,1);			  % Contact impedances.
 % Specify the current pattern. Set the last argument to L/2 for 'opp', L-1
 % for 'tri', or no argument. 
-[II1,T]=Current(L,NNode2,'tri',1,L-1);	  
+% We want the rms current to be 800uA.
+rms = 800e-6;
+[II1,T]=Current(L,NNode2,'tri',rms,L-1);	  
 
 [Agrad,Kb,M,S,C]=FemMatrix(Node2,Element2,z);
 A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
@@ -46,3 +49,8 @@ A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
 Uel=U.Electrode(:);
 figure(2)
 clf,Plotinvsol(U.Current,g2,H2); colorbar; drawnow;
+
+[U2,p2,r2]=ForwardSolution(NNode2,NElement2,A,C,T,[],'comp'); % Simulated data.
+Uel2=U2.Electrode(:);
+figure(3)
+clf,Plotinvsol(U2.Current,g2,H2); colorbar; drawnow;
