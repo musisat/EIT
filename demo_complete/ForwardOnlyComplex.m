@@ -19,15 +19,13 @@ H2=reshape([Element2.Topology],3,NElement2)';
 
 
 disp('Choose a circular inhomogeneity. Left mouse button, center, right button, radius.')
-% Now we can insert two inhomogeneities.
-% This is sort of annoying so I'm getting rid of it.
 Ind1=ChooseCircle(Node2,Element2);       % Make data for an inhomogeneity.
-%Ind2=ChooseCircle(Node2,Element2);
-sigma=1/400*ones(NElement2,1);            % Make a conductivity vector.
-sigma(Ind1)=5/400;			  % Conductivity of the inhomogeneity.
-%sigma(Ind2)=2/400;
+resis = 400*ones(NElement2,1) + 10*1i; % Resistivity vector
+resis(Ind1)=400/5 + 2*1i;			   % Conductivity of the inhomogeneity.
+sigma=1./resis;                 % Make a conductivity vector.
+% We can use complex conductivity! I think I'd rather make it resistivity
+% for ease.
 
-% Eventually we'll want to get rid of Plotinvsol or rewrite it.
 figure(1)
 clf,Plotinvsol(1./sigma,g2,H2);colorbar,title('Your resistivity distribution');drawnow
 disp('Press any key to continue...'),pause
@@ -45,10 +43,10 @@ rms = 800e-6;
 A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
 
 % This is ultimately what we want to plot:
-[U,p,r]=ForwardSolution(NNode2,NElement2,A,C,T,[],'real'); % Simulated data.
-Uel=U.Electrode(:);
-figure(2)
-clf,Plotinvsol(U.Current,g2,H2); colorbar; drawnow;
+% [U,p,r]=ForwardSolution(NNode2,NElement2,A,C,T,[],'real'); % Simulated data.
+% Uel=U.Electrode(:);
+% figure(2)
+% clf,Plotinvsol(U.Current,g2,H2); colorbar; drawnow;
 
 [U2,p2,r2]=ForwardSolution(NNode2,NElement2,A,C,T,[],'comp'); % Simulated data.
 Uel2=U2.Electrode(:);
