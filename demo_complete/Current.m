@@ -23,18 +23,19 @@ function [I,T]=Current(L,lg,style,rms,numpat)
 % University of Kuopio, Department of Applied Physics, PO Box 1627,
 % FIN-70211 Kuopio, Finland, email: Marko.Vauhkonen@uku.fi
 
+% Need to make sure frequencies are 50kHz, at least for "adj".
 
-if nargin < 4 & style == 'tri'
+if nargin < 4 && strcmp(style,'tri')
  rms=1;
  numpat=L-1;
 end
 
-if nargin < 4 & style ~= 'tri'
+if nargin < 4 && ~strcmp(style,'tri')
  rms=1;
  numpat=L;
 end
 
-if nargin == 4 & style == 'tri'
+if nargin == 4 && strcmp(style,'tri')
  numpat=L-1;
 end
 
@@ -63,8 +64,8 @@ I=[zeros(lg,numpat);II];
 T=II;
 
 case 'adj'
-II=zeros(L,numpat);
-l=(1:L)';
+%II=zeros(L,numpat);
+%l=(1:L)';
 II1=diag(ones(L,1));
 II2=diag(ones(L-1,1),-1);
 if numpat < L
