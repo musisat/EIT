@@ -33,8 +33,6 @@ function [U,p,r]=ForwardSolution(NNode,NElement,A,C,T,MeasPattern,style,p,r)
 
 L=max(size(A))-NNode+1;    % The number of electrodes     
 
-% I don't think 'comp' is actually useful to me. We can consider simple
-% impedance.
 if strcmp(style,'comp')
  II1=sparse([zeros(L,NNode),C,zeros(L,NNode+L-1);zeros(L,2*NNode+L-1),C]);
   if ~isempty(MeasPattern) 
@@ -75,6 +73,7 @@ elseif strcmp(style,'real')
   r(p)=1:max(size(p));
  end
 
+ % I'm honestly not sure what the hell is happening here.
  R=chol(A(p,p));
  UU=R\(R'\[II1(p,:),II(p,:)]);
  UU=full(UU(r,:));

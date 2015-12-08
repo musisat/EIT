@@ -31,7 +31,8 @@ disp('Press any key to continue...'),pause
 disp('Computes the simulated data.')
 L=16;					  % The number of electrodes.
 z=0.005*ones(L,1);			  % Contact impedances.
-[II1,T]=Current(L,NNode2,'tri');	  % Trigonometric current pattern.
+rms = 800e-6;
+[II1,T]=Current(L,NNode2,'tri',rms);	  % Trigonometric current pattern.
 
 [Agrad,Kb,M,S,C]=FemMatrix(Node2,Element2,z);
 A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
