@@ -1,8 +1,6 @@
-function CreateInhomogeneities(Node,Element)
+function [sigma] = CreateInhomogeneities(Node2,Element2)
 % CREATEINHOMOGENEITIES will create a domain to replicate the cross section
-% of lungs and heart. Maybe make this a function to be able to select which
-% domain we want to test. This script will be useful for performing
-% electrode tolerance testing.
+% of lungs and heart. Returns a conductivity grid sigma.
 
 % Assign resistivity values, measured in ohm-meters.
 % Bone: 150
@@ -20,7 +18,14 @@ baseR = 8;
 lungR = 5*baseR;
 heartR = 1.5;
 
-lungInd1 = ChooseCircleXY(Node,Element,[-5,3.8],[-5,9]);
-lungInd2 = ChooseCircleXY(Node,Element,[5,3.8],[5,9]);
-heartInd = ChooseCircleXY(Node,Element,[0,-4],[0,-6]);
+NElement2=max(size(Element2));                %The number of elements
+
+lungInd1 = ChooseCircleXY(Node2,Element2,[-5,3.8],[-5,9]);
+lungInd2 = ChooseCircleXY(Node2,Element2,[5,3.8],[5,9]);
+heartInd = ChooseCircleXY(Node2,Element2,[0,-4],[0,-6]);
+resis = baseR*ones(NElement2,1);         % Resistivity vector
+resis(lungInd1)=lungR;
+resis(lungInd2)=lungR;
+resis(heartInd)=heartR;
+sigma=1./resis;                        % Make a conductivity vector.
 

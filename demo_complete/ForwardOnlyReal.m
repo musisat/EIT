@@ -22,7 +22,7 @@ H2=reshape([Element2.Topology],3,NElement2)';
 disp('Choose a circular inhomogeneity. Left mouse button, center, right button, radius.')
 Ind1=ChooseCircle(Node2,Element2);     % Make data for an inhomogeneity.
 resis = 400*ones(NElement2,1);         % Resistivity vector
-resis(Ind1)=400/5;			           % Conductivity of the inhomogeneity.
+resis(Ind1)=400/5;			           % Resistivity of the inhomogeneity.
 sigma=1./resis;                        % Make a conductivity vector.
 % We can use complex conductivity! I think I'd rather make it resistivity
 % for ease.
