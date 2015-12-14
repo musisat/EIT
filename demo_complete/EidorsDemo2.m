@@ -10,7 +10,6 @@ load meshdata  % Data for two different meshes.
 
 NNode1=max(size(Node1));                      %The number of nodes
 NElement1=max(size(Element1));                %The number of element
-% Maybe the second mesh just contains the inhomogeneities.
 NNode2=max(size(Node2));                      %The number of nodes
 NElement2=max(size(Element2));                %The number of elements
 

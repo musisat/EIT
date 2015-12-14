@@ -21,8 +21,8 @@ H2=reshape([Element2.Topology],3,NElement2)';
 
 disp('Choose a circular inhomogeneity. Left mouse button, center, right button, radius.')
 Ind1=ChooseCircle(Node2,Element2);     % Make data for an inhomogeneity.
-resis = 400*ones(NElement2,1);         % Resistivity vector
-resis(Ind1)=400/5;			           % Resistivity of the inhomogeneity.
+resis = 5*ones(NElement2,1);         % Resistivity vector
+resis(Ind1)=25;			           % Resistivity of the inhomogeneity.
 sigma=1./resis;                        % Make a conductivity vector.
 % We can use complex conductivity! I think I'd rather make it resistivity
 % for ease.
@@ -39,15 +39,13 @@ z=0.005*ones(L,1);			  % Contact impedances.
 % We want the rms current to be 800uA.
 rms = 800e-6;
 
-[II1,T]=Current(L,NNode2,'tri',rms);	  
+[II1,T]=Current(L,NNode2,'adj',rms);	  
 
 [Agrad,Kb,M,S,C]=FemMatrix(Node2,Element2,z);
 A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
 
-% This is ultimately what we want to plot:
 [U,p,r]=ForwardSolution(NNode2,NElement2,A,C,T,[],'real'); % Simulated data.
 Uel=U.Electrode(:);
 figure(2)
-% I don't think U.Current is actually giving me current in amps.
 clf,Plotinvsol(U.Current,g2,H2); colorbar; drawnow;
 

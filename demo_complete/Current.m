@@ -23,7 +23,7 @@ function [I,T]=Current(L,lg,style,rms,numpat)
 % University of Kuopio, Department of Applied Physics, PO Box 1627,
 % FIN-70211 Kuopio, Finland, email: Marko.Vauhkonen@uku.fi
 
-% Need to make sure frequencies are 50kHz, at least for "adj".
+% FOR OUR PURPOSES, ONLY USE TRI.
 
 if nargin < 4 && strcmp(style,'tri')
  rms=1;
