@@ -1,4 +1,5 @@
-% EidorsDemo1 Demonstrates the use of 2D EIT Package for simulations with linear approximation basis
+% ForwardOnlyComplex demonstrates the use of 2D EIT Package for simulations with linear approximation basis
+% Only the forward solution, with complex solving.
 
 % M. Vauhkonen 28.3.2000,
 % University of Kuopio, Department of Applied Physics, PO Box 1627,

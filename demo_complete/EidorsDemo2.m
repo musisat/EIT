@@ -27,8 +27,8 @@ z=0.005*ones(L,1);			  % Contact impedances.
 
 % Load some data measured with the EIT system built in Kuopio
 % So we have to create this data ahead of time, maybe.
-load bubble1.dat
-meas=bubble1(1280-255:1280);
+load bubble2.dat
+meas=bubble2(1280-255:1280);
 Uel=reshape(meas,L,L);
 Uel=RemoveVolt(Uel,L);
 
