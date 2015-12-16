@@ -1,6 +1,7 @@
-function [sigma] = CreateInhomogeneities(Node2,Element2)
+function [sigma] = CreateInhomogeneities(Node2,Element2,baseR)
 % CREATEINHOMOGENEITIES will create a domain to replicate the cross section
-% of lungs and heart. Returns a conductivity grid sigma.
+% of lungs and heart. Returns a conductivity grid sigma. Must input the
+% base resistivity, baseR.
 
 % Assign resistivity values, measured in ohm-meters.
 % Bone: 150
@@ -14,7 +15,7 @@ function [sigma] = CreateInhomogeneities(Node2,Element2)
 
 % For now, choose background resistivity to be 8 ohm*m. Heart is full of
 % blood and can be 1.5 ohm*m. Lungs can be 8*5=40 ohm*m.
-baseR = 8;
+
 lungR = 5*baseR;
 heartR = 1.5;
 

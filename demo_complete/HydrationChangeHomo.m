@@ -5,8 +5,10 @@
 % corresponds to a change in local impedance from 64 ohms to 74 ohms, or a
 % resistivity of 7.4538 ohm*m to 8.0084 ohm*m.
 
-resis1 = 7.4538;
-resis2 = 8.0084;
+%resis1 = 7.4538;
+%resis2 = 8.0084;
+resis1 = 7;
+resis2 = 10;
 
 load meshdata
 
@@ -46,8 +48,8 @@ A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
 [U2,~,~]=ForwardSolution(NNode2,NElement2,A,C,T,[],'real'); % Simulated data.
 Uel2=U2.Electrode(:);
 figure(2)
-clf,Plotinvsol(U2.Current,g2,H2); colorbar,title('Final potential distribution'),set(gca,'FontSize',12); drawnow;
+clf,Plotinvsol(U2.Current,g2,H2); colorbar,title('Final potential distribution','FontSize',12),set(gca,'FontSize',12); drawnow;
 figure(1)
-clf,Plotinvsol(U1.Current,g2,H2);colorbar,title('Initial potential distribution'),set(gca,'FontSize',12); drawnow;
+clf,Plotinvsol(U1.Current,g2,H2);colorbar,title('Initial potential distribution','FontSize',12),set(gca,'FontSize',12); drawnow;
 caxis([min(min(U2.Current)), max(max(U2.Current))]);
 
