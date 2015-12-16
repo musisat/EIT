@@ -65,7 +65,7 @@ iter=6;
 
 no=norm(Uel(:)-Urefel(:))^2+alpha*norm(R*rho)^2;
 for ii=1:iter
- rho=rho+(J'*J+alpha*R'*R)\(J'*(Uel(:)-Urefel(:))-alpha*R'*R*rho);
+ rho=rho+(J'*J+alpha*(R')*R)\(J'*(Uel(:)-Urefel(:))-alpha*(R')*R*rho);
  no=[no;norm(Uel(:)-Urefel(:))^2+alpha*norm(R*rho)^2];             %Error norm
  rhobig=Ind2*rho;
  A=UpdateFemMatrix(Agrad,Kb,M,S,1./rhobig);  % The system matrix.

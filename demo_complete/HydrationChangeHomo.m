@@ -1,3 +1,5 @@
+% Effect of hydration change over a homogeneous domain
+
 % For a particular subject, we see a change in total body water from
 % 49.95 liters to 48.498 liters over the course of 2.5 hours. This
 % corresponds to a change in local impedance from 64 ohms to 74 ohms, or a
@@ -25,11 +27,9 @@ sigma=1./resis;                        % Make a conductivity vector.
 
 L=16;					      % The number of electrodes.
 z=0.005*ones(L,1);			  % Contact impedances.
-% Specify the current pattern. Set the last argument to L/2 for 'opp', L-1
-% for 'tri', or no argument. 
 % We want the rms current to be 800uA.
 rms = 800e-6;
-[~,T]=Current(L,NNode2,'ref',rms);	
+[~,T]=Current(L,NNode2,'tri',rms);	
 [Agrad,Kb,M,S,C]=FemMatrix(Node2,Element2,z);
 A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
 [U1,~,~]=ForwardSolution(NNode2,NElement2,A,C,T,[],'real'); % Simulated data.
@@ -40,14 +40,14 @@ Uel1=U1.Electrode(:);
 resis = resis2*ones(NElement2,1);         % Resistivity vector
 sigma=1./resis;                           % Make a conductivity vector.
 
-[II1,T]=Current(L,NNode2,'ref',rms);	
+[II1,T]=Current(L,NNode2,'tri',rms);	
 [Agrad,Kb,M,S,C]=FemMatrix(Node2,Element2,z);
 A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
 [U2,~,~]=ForwardSolution(NNode2,NElement2,A,C,T,[],'real'); % Simulated data.
 Uel2=U2.Electrode(:);
 figure(2)
-clf,Plotinvsol(U2.Current,g2,H2); colorbar,title('Final current distribution'); drawnow;
+clf,Plotinvsol(U2.Current,g2,H2); colorbar,title('Final potential distribution'),set(gca,'FontSize',12); drawnow;
 figure(1)
-clf,Plotinvsol(U1.Current,g2,H2);colorbar,title('Initial current distribution'); drawnow;
+clf,Plotinvsol(U1.Current,g2,H2);colorbar,title('Initial potential distribution'),set(gca,'FontSize',12); drawnow;
 caxis([min(min(U2.Current)), max(max(U2.Current))]);
 
