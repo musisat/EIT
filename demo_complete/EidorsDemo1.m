@@ -22,6 +22,7 @@ disp('Choose a circular inhomogeneity. Left mouse button, center, right button, 
 Ind=ChooseCircle(Node2,Element2);       % Make data for an inhomogeneity.
 sigma=1/400*ones(NElement2,1);            % Make a conductivity vector.
 sigma(Ind)=2/400;			  % Conductivity of the inhomogeneity.
+% sigma = CreateInhomogeneities(Node2,Element2,7);
 
 % Eventually we'll want to get rid of Plotinvsol or rewrite it.
 figure(1)

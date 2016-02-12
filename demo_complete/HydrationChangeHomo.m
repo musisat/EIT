@@ -5,8 +5,8 @@
 % corresponds to a change in local impedance from 64 ohms to 74 ohms, or a
 % resistivity of 7.4538 ohm*m to 8.0084 ohm*m.
 
-%resis1 = 7.4538;
-%resis2 = 8.0084;
+% resis1 = 7.4538;
+resis2 = 8.0084;
 resis1 = 7;
 resis2 = 10;
 

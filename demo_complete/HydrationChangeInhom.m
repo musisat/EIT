@@ -17,7 +17,7 @@ H2=reshape([Element2.Topology],3,NElement2)';
 sigma = CreateInhomogeneities(Node2,Element2,7);
 figure(1)
 clf,Plotinvsol(1./sigma,g2,H2);colorbar,title('Resistivity distribution','FontSize',12),set(gca,'FontSize',12);drawnow
-figure(2)
+figure(3)
 
 L=16;					      % The number of electrodes.
 z=0.005*ones(L,1);			  % Contact impedances.
@@ -38,7 +38,6 @@ sigma = CreateInhomogeneities(Node2,Element2,10);       % Make a conductivity ve
 A=UpdateFemMatrix(Agrad,Kb,M,S,sigma);  % The system matrix.
 [U2,~,~]=ForwardSolution(NNode2,NElement2,A,C,T,[],'real'); % Simulated data.
 Uel2=U2.Electrode(:);
-figure(3)
 clf,Plotinvsol(U2.Current,g2,H2); colorbar,title('Final potential distribution','FontSize',12),set(gca,'FontSize',12); drawnow;
 figure(2)
 clf,Plotinvsol(U1.Current,g2,H2);colorbar,title('Initial potential distribution','FontSize',12),set(gca,'FontSize',12); drawnow;

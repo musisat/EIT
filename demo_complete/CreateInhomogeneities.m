@@ -16,7 +16,8 @@ function [sigma] = CreateInhomogeneities(Node2,Element2,baseR)
 % For now, choose background resistivity to be 8 ohm*m. Heart is full of
 % blood and can be 1.5 ohm*m. Lungs can be 8*5=40 ohm*m.
 
-lungR = 5*baseR;
+%lungR = 5*baseR;
+lungR = 35;
 heartR = 1.5;
 
 NElement2=max(size(Element2));                %The number of elements
